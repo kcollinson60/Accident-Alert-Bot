@@ -1,0 +1,366 @@
+[
+    { 
+        "name": "I-35/80 @ East Mix", 
+        "location": { "lat": 41.652686, "lon": -93.573860 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv01lb.jpg"
+    },
+    { 
+        "name": "I-235 @ Euclid",
+        "location": { "lat": 41.640913, "lon": -93.575944 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv98lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ Euclid", 
+        "location": { "lat": 41.627890, "lon": -93.575148 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv02lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ Guthrie", 
+        "location": { "lat": 41.615514, "lon": -93.577539 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv03lb.jpg"
+    },
+    { 
+        "name": "I-235 @ E 21st", 
+        "location": { "lat": 41.602882, "lon": -93.580512 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv04lb.jpg"
+    },
+    { 
+        "name": "I-235 @ University Blvd", 
+        "location": { "lat": 41.600735, "lon": -93.584588 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv71lb.jpg"
+    },
+    { 
+        "name": "I-235 @ E 14th", 
+        "location": { "lat": 41.596046, "lon": -93.599047 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv05lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ E 12th", 
+        "location": { "lat": 41.594724, "lon": -93.603199 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv06lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ 2nd Ave", 
+        "location": { "lat": 41.595732, "lon": -93.619664 },
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv07lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ 7th St", 
+        "location": { "lat": 41.595811, "lon": -93.626969 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv08lb.jpg"
+    },
+    { 
+        "name": "I-235 @ Keo Way", 
+        "location": { "lat": 41.596015, "lon": -93.636684 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv09lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ MLK", 
+        "location": { "lat": 41.596342, "lon": -93.644417 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv10lb.jpg"
+    },
+    { 
+        "name": "I-235 @ 28th St", 
+        "location": { "lat": 41.592869, "lon": -93.655412 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv11lb.jpg"
+    },
+    { 
+        "name": "I-235 @ 35th St", 
+        "location": { "lat": 41.593413, "lon": -93.665716 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv12lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ 42nd St", 
+        "location": { "lat": 41.590938, "lon": -93.6742246 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv13lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ Polk Blvd", 
+        "location": { "lat": 41.591791, "lon": -93.681662 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv14lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ 63rd St", 
+        "location": { "lat": 41.593090, "lon": -93.703369 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv15lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ 22nd St", 
+        "location": { "lat": 41.593077, "lon": -93.735683 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv16lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ Valley West", 
+        "location": { "lat": 41.592299, "lon": -93.752053 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv17lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ 42nd WDM", 
+        "location": { "lat": 41.591992, "lon": -93.764641 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv72lb.jpg" 
+    },
+    { 
+        "name": "I-235 @ West Mix", 
+        "location": { "lat": 41.618134, "lon": -93.676312 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv44qlb.jpg" 
+    },
+
+    { 
+        "name": "I-80 @ 1st Ave Altoona", 
+        "location": { "lat": 41.667340, "lon": -93.464757 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv39lb.jpg" 
+    },
+    { 
+        "name": "I-80 @ Ziegler Cat", 
+        "location": { "lat": 41.663123, "lon": -93.478565 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv47lb.jpg"
+    },
+    { 
+        "name": "I-80 @ Hubbell Ave West", 
+        "location": { "lat": 41.662149, "lon": -93.493535 },
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv59lb.jpg" 
+    },
+    { 
+        "name": "I-80 @ Hubbell Ave East", 
+        "location": { "lat": 41.661704, "lon": -93.495672 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv25lb.jpg" 
+    },
+    { 
+        "name": "I-80 @ 34th Ave", 
+        "location": { "lat": 41.661550, "lon": -93.503239 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv56lb.jpg" 
+    },
+    { 
+        "name": "I-80 @ US 65", 
+        "location": { "lat": 41.659644, "lon": -93.521588 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv26lb.jpg"
+    },
+    { 
+        "name": "I-80 @ 38th St", 
+        "location": { "lat": 41.657159, "lon": -93.543487 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv54lb.jpg" 
+    },
+    { 
+        "name": "I-80 @ NE Mix", 
+        "location": { "lat": 41.653414, "lon": -93.568671 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv58lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ I-35 SB Ramps", 
+        "location": { "lat": 41.655111, "lon": -93.576324 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv87lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ East of US 69", 
+        "location": { "lat": 41.650165, "lon": -93.591255 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv89lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ E 14th St", 
+        "location": { "lat": 41.649708, "lon": -93.599807 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv24lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ 2nd St", 
+        "location": { "lat": 41.649281, "lon": -93.626158 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv23lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ Morningstar", 
+        "location": { "lat": 41.649663, "lon": -93.652566 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv43lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ NW Beaver Dr", 
+        "location": { "lat": 41.651580, "lon": -93.680193 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv95lb.jpg"
+    },
+    { 
+        "name": "I-35/80 @ Merle Hay", 
+        "location": { "lat": 41.652904, "lon": -93.697168 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv22lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ NW 86th St", 
+        "location": { "lat": 41.652585, "lon": -93.736628 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv21lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ 100th St", 
+        "location": { "lat": 41.652171, "lon": -93.755706 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv97lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ 141 Flyover", 
+        "location": { "lat": 41.649867, "lon": -93.773423 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv96lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ Meredith Dr", 
+        "location": { "lat": 41.643911, "lon": -93.776408 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv57lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ Douglas Ave",
+        "location": { "lat": 41.629296, "lon": -93.776291 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv42lb.jpg"
+    },
+    { 
+        "name": "I-35/80 @ Hickman Rd", 
+        "location": { "lat": 41.614612, "lon": -93.777108 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv19lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ University Ave", 
+        "location": { "lat": 41.600302, "lon": -93.776223 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv51lb.jpg" 
+    },
+    { 
+        "name": "I-35/80 @ Westown Pkwy", 
+        "location": { "lat": 41.595252, "lon": -93.778615 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv68lb.jpg" 
+    },
+    { 
+        "name": "I-35 @ Ashworth Rd", 
+        "location": { "lat": 41.584619, "lon": -93.778096 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv55lb.jpg" 
+    },
+    { 
+        "name": "I-35 @ Mills Civic", 
+        "location": { "lat": 41.559373, "lon": -93.776656 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv50lb.jpg" 
+    },
+    { 
+        "name": "I-35 @ Grand Ave", 
+        "location": { "lat": 41.541650, "lon": -93.775650 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv49lb.jpg" 
+    },
+    { 
+        "name": "I-35 @ 54th Ave", 
+        "location": { "lat": 41.658552, "lon": -93.574106 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv69lb.jpg" 
+    },
+    { 
+        "name": "I-35 @ Corporate Woods Dr S", 
+        "location": { "lat": 41.670074, "lon": -93.578002 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv37lb.jpg" 
+    },
+    { 
+        "name": "I-35 @ Corporate Woods Dr N", 
+        "location": { "lat": 41.680135, "lon": -93.576195 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv53lb.jpg" 
+    },
+    { 
+        "name": "I-35 @ Oralabor Rd", 
+        "location": { "lat": 41.703005, "lon": -93.576686 }, 
+        "imageUrl": "https://cams.dogitech.net/image/I35_Oralabor.jpg?user=User&q=80&s=80" 
+    },
+    { 
+        "name": "I-35 @ 1st St", 
+        "location": { "lat": 41.732227, "lon": -93.576744 }, 
+        "imageUrl": "https://cams.dogitech.net/image/I35_E_1st.jpg?user=User&q=80&s=80" 
+    },
+    { 
+        "name": "I-35 @ MM94", 
+        "location": { "lat": 41.750765, "lon": -93.574039 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv60lb.jpg" 
+    },
+    { 
+        "name": "I-35 @ 36th St", 
+        "location": { "lat": 41.761262, "lon": -93.568964 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv61lb.jpg" 
+    },
+    { 
+        "name": "I-35 @ IA 5", 
+        "location": { "lat": 41.523975, "lon": -93.774118 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv36lb.jpg" 
+    },
+    { 
+        "name": "I-80 @ Jordan Creek", 
+        "location": { "lat": 41.592267, "lon": -93.809213 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv18lb.jpg" 
+    },
+    { 
+        "name": "I-80 @ Ashworth Rd", 
+        "location": { "lat": 41.585174, "lon": -93.822091 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv70lb.jpg" 
+    },
+    { 
+        "name": "I-80 @ Grand Prairie Pkwy", 
+        "location": { "lat": 41.568785, "lon": -93.853392 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv48lb.jpg" 
+    },
+
+    { 
+        "name": "US 65 @ NE 46th Ave", 
+        "location": { "lat": 41.643698, "lon": -93.509769 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv27lb.jpg" 
+    },
+    { 
+        "name": "US 65 @ E University Ave", 
+        "location": { "lat": 41.598752, "lon": -93.497400 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv28lb.jpg"
+    },
+    { 
+        "name": "US 65 @ Vandalia", 
+        "location": { "lat": 41.571651, "lon": -93.512999 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv29lb.jpg" 
+    },
+    { 
+        "name": "US 65 @ Army Post Rd", 
+        "location": { "lat": 41.525327, "lon": -93.519168 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv30lb.jpg" 
+    },
+    { 
+        "name": "IA 5 @ US 65/69", 
+        "location": { "lat": 41.506435, "lon": -93.573291 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv32lb.jpg" 
+    },
+    {
+        "name": "IA 5 @ Fleur Dr", 
+        "location": { "lat": 41.506790, "lon": -93.644828 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv33lb.jpg" 
+    },
+    { 
+        "name": "IA 5 @ IA 28", 
+        "location": { "lat": 41.514224, "lon": -93.682499 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv34lb.jpg" 
+    },
+    { 
+        "name": "IA 5 @ Veterans Pkwy", 
+        "location": { "lat": 41.521661, "lon": -93.719923 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv35lb.jpg" 
+    },
+
+    { 
+        "name": "IA 141 @ SE 37th St", 
+        "location": { "lat": 41.656953, "lon": -93.775347 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv90lb.jpg" 
+    },
+    { 
+        "name": "IA 141 @ 19th St", 
+        "location": { "lat": 41.67320, "lon": -93.774302 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv91lb.jpg" 
+    },
+    { 
+        "name": "IA 141 @ 1st St", 
+        "location": { "lat": 41.688046, "lon": -93.774043 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv92lb.jpg" 
+    },
+    { 
+        "name": "IA 141 @ IA 415", 
+        "location": { "lat": 41.739673, "lon": -93.775763 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv93lb.jpg" 
+    },
+
+    { 
+        "name": "I-80 @ N Walnut St Colfax", 
+        "location": { "lat": 41.692457, "lon": -93.246707 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/80TV155lb.jpg" 
+    },
+    { 
+        "name": "I-80 @ NE 12th St MtcVill", 
+        "location": { "lat": 41.692457, "lon": -93.246707 }, 
+        "imageUrl": "https://iowadotsnapshot.us-east-1.skyvdn.com/80TV149lb.jpg" 
+    }
+]
