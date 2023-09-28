@@ -1,6 +1,6 @@
-const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
+const { Client, GatewayIntentBits, EmbedBuilder, AttachmentBuilder } = require("discord.js");
 const axios = require("axios");
-
+const fs = require('fs');
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -8,21 +8,18 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
   ],
 });
-const token = "<Token_Goes_Here>"; // Replace with your bot token
-const channelId = "<Channel_ID>"; // Replace with the ID of the channel to send the alerts
-const roleId = "<Role_ID>"; // Replace with the ID of the role to mention
-const targetLat = <Center_Location_Lat>; // Latitude of the target point
-const targetLon = <Center_Location_Long>; // Longitude of the target point
+
+const token = "<Discord_Token_Goes_Here"; // Replace with your bot token
+const channelId = "<Discord_Channel_ID>"; // Replace with the ID of the channel to send the alerts
+const roleId = "<Discord_Role_ID>"; // Replace with the ID of the role to mention
+const targetLat = <Center_Lat>; // Latitude of the target point 55.5555
+const targetLon = <Center_Lon>; // Longitude of the target point -55.5555
 const maxDistance = 15; // Maximum distance in miles
-const maxCameraDistance = 1.5; // Maximum distance to consider a camera in miles
+const maxCameraDistance = .5; // Maximum distance to consider a camera in miles
 const minDuplicateDistance = 1; // Minimum distance in miles for considering duplicate alerts
 const duplicateAlertInterval = 10 * 60 * 1000; // 10 minutes (in milliseconds)
 
-const trafficCameras = [
-//List camera image URLs and Locations here
-//Example: { name: 'I-35/80 @ East Mix', location: { lat: 41.652686, lon: -93.573860 }, imageUrl: 'https://iowadotsnapshot.us-east-1.skyvdn.com/dmtv01lb.jpg' },
-  ];
-  
+const cameraData = JSON.parse(fs.readFileSync('Cameras.json', 'utf8')); //Defines Camera List, currently in JSON format
 
 let previousReports = []; // Array to store previous accident reports
 
@@ -34,14 +31,14 @@ client.on("ready", () => {
 
 client.login(token);
 
+const downloadDirectory = './downloaded_images'; // Specify the directory for downloaded images
+
 async function sendAccidentAlerts() {
   try {
-    //Adjust cordinates in this URL to match your location
     const response = await axios.get("https://www.waze.com/rtserver/web/TGeoRSS?bottom=41.480736238455194&left=-94.51194763183595&ma=799&mj=200&mu=200&right=-92.92991638183595&top=41.7222676196229&types=alerts,traffic");
 
-    // Extract the accident reports from the JSON response
-    // "alert.type" and "alert.subtype" are included in this, the types can be found when inspecting the JSON repsonse from Waze under the alert category
-    const reports = response.data.alerts.filter((alert) => alert.type === "ACCIDENT" || alert.type === "JAM" || alert.subtype === "HAZARD_ON_ROAD_OBJECT" || alert.subtype === "HAZARD_ON_SHOULDER_CAR_STOPPED");
+    // Extract the police reports from the JSON response
+    const reports = response.data.alerts.filter((alert) => alert.type === "POLICE"); //Define Waze Alert type and Subtypes here e.g. POLICE, ACCIDENT, JAM
 
     const channel = client.channels.cache.get(channelId);
     const role = channel.guild.roles.cache.get(roleId);
@@ -54,16 +51,6 @@ async function sendAccidentAlerts() {
     if (newReports.length === 0) {
       return; // No new accident reports found, no need to send a notification
     }
-    //This appends a random string to avoid discord caching. This needs changed to upload an attachment instead of an image
-    function generateRandomString(length) {
-        const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        let result = "";
-        const charactersLength = characters.length;
-        for (let i = 0; i < length; i++) {
-          result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-      }
 
     for (const report of newReports) {
         if (isNewAlert(report)) {
@@ -80,28 +67,33 @@ async function sendAccidentAlerts() {
                 { name: "Reported Location", value: `${address.street || "Unknown"}, ${address.city || "Unknown"}` },
                 { name: "Alert Subtype", value: report.subtype || "Unknown" }
               );
-              
-              //This part will find the nearest camera based off the list above, need to change this so it will send it as an attachment instead of a URL
+      
+
               if (nearestCamera) {
-                const randomString = generateRandomString(10); // Generate a random string of length 10
-                const imageUrl = `${nearestCamera.imageUrl}?r=${randomString}`; // Append the random string as a query parameter
-              
+                const randomString = generateRandomString(10);
+                const imageUrl = `${nearestCamera.imageUrl}?r=${randomString}`;
+        
+                // Download the image and attach it
+                const imageBuffer = await downloadImage(imageUrl);
+                const imageFileName = `${randomString}.jpg`; // Use the random string as the filename
+                const attachment = new AttachmentBuilder(imageBuffer, { name: imageFileName });
+        
                 embed.addFields({ name: "Nearest Camera", value: nearestCamera.name })
                   .addFields({ name: "Camera Location", value: `${nearestCamera.location.lat}, ${nearestCamera.location.lon}` })
-                  .setImage(imageUrl) // Set the image for the embed
-                  .setTimestamp();
-
-                  channel.send({ content: `Attention <@&${roleId}>! There is a new traffic alert near ${address.city || 'Unknown'}.` });
-                  channel.send({ embeds: [embed] }); // Send the embed with the image attachment
-                } else {
+                  .setImage(`attachment://${imageFileName}`); // Set the image in the embed as the downloaded image
+        
+                // Send the embed with the attached image
+                channel.send({ content: `Attention <@&${roleId}>! There is a new traffic alert near ${address.city || 'Unknown'}.`, embeds: [embed], files: [attachment] });
+              } else {
                 embed.addFields({ name: "No Nearby Cameras", value: "No nearby cameras found." });
-                channel.send({ content: `Attention <@&${roleId}>! There is a new traffic alert near ${address.city || 'Unknown'}.` });
-                channel.send({ embeds: [embed] });
+        
+                // Send the embed
+                channel.send({ content: `Attention <@&${roleId}>! There is a new traffic alert near ${address.city || 'Unknown'}.`, embeds: [embed] });
+              }
             }
           }
         }
-      }
-
+        
     previousReports = reports; // Update the previous reports
   } catch (error) {
     console.error("Error retrieving Accident reports:", error);
@@ -130,7 +122,7 @@ function findNearestCamera(latitude, longitude, maxDistance) {
   let nearestCamera = null;
   let minDistance = Infinity;
 
-  for (const camera of trafficCameras) {
+  for (const camera of cameraData) { // Use cameraData instead of trafficCameras
     const distance = getDistance(latitude, longitude, camera.location.lat, camera.location.lon);
     if (distance < minDistance && distance <= maxDistance) {
       minDistance = distance;
@@ -177,4 +169,24 @@ async function reverseGeocode(latitude, longitude) {
     console.error("Error retrieving reverse geocoding data:", error);
     return {};
   }
+}
+
+async function downloadImage(url) {
+  try {
+    const response = await axios.get(url, { responseType: 'arraybuffer' });
+    return response.data;
+  } catch (error) {
+    console.error("Error downloading image:", error);
+    return null;
+  }
+}
+
+function generateRandomString(length) {
+  const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let result = "";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }
