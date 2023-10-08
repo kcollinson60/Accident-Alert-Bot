@@ -5,12 +5,7 @@ A bot that uses the Waze website to send accident alerts to discord
 Testing on Ubuntu 22.04
 Using NodeJS v16.9.1 npm 7.21.1
 
-Requires:
-Discord.js v14.11.0
-Axios v1.4.0
-fs-js v1.0.6
-geolib v3.3.4
-pm2 v5.3.0
+Requires: MySQL DB and Discord Server
 
 I am using PM2 to run the program in the background
 
