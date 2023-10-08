@@ -2,7 +2,7 @@
   "name": "accidentbot",
   "version": "1.0.0",
   "description": "AccidentBot",
-  "main": "AccidentBot-Test-2.js",
+  "main": "AccidentAlertBot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
