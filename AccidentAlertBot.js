@@ -1,6 +1,9 @@
 const { Client, GatewayIntentBits, EmbedBuilder, AttachmentBuilder } = require("discord.js");
 const axios = require("axios");
+const mysql = require("mysql2/promise");
 const fs = require('fs');
+require('dotenv').config(); // Load environment variables from .env file
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -9,94 +12,179 @@ const client = new Client({
   ],
 });
 
-const token = "<Discord_Token_Goes_Here"; // Replace with your bot token
-const channelId = "<Discord_Channel_ID>"; // Replace with the ID of the channel to send the alerts
-const roleId = "<Discord_Role_ID>"; // Replace with the ID of the role to mention
-const targetLat = <Center_Lat>; // Latitude of the target point 55.5555
-const targetLon = <Center_Lon>; // Longitude of the target point -55.5555
-const maxDistance = 15; // Maximum distance in miles
-const maxCameraDistance = .5; // Maximum distance to consider a camera in miles
-const minDuplicateDistance = 1; // Minimum distance in miles for considering duplicate alerts
-const duplicateAlertInterval = 10 * 60 * 1000; // 10 minutes (in milliseconds)
+const token = process.env.DISCORD_TOKEN;
+const channelId = process.env.CHANNEL_ID;
+const roleId = process.env.ROLE_ID;
+const targetLat = <coords_go_here>; // Latitude of the target point
+const targetLon = <coords_go_here>; // Longitude of the target point
+const maxDistance = parseFloat(process.env.MAX_DISTANCE);
+const maxCameraDistance = parseFloat(process.env.MAX_CAMERA_DISTANCE);
+const minDuplicateDistance = parseFloat(process.env.MIN_DUPLICATE_DISTANCE);
+const duplicateAlertInterval = parseInt(process.env.DUPLICATE_ALERT_INTERVAL);
+const wazeApiUrl = process.env.WAZE_API_URL;
+const camerasFile = process.env.CAMERAS_FILE;
 
-const cameraData = JSON.parse(fs.readFileSync('Cameras.json', 'utf8')); //Defines Camera List, currently in JSON format
+const cameraData = JSON.parse(fs.readFileSync(camerasFile, 'utf8'));
 
-let previousReports = []; // Array to store previous accident reports
+let previousReports = [];
+let activeAlerts = {};
+
+// Create a connection pool for MySQL
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
   sendAccidentAlerts();
-  setInterval(sendAccidentAlerts, 60 * 1000); // Fetch alerts every 5 minutes
+  setInterval(sendAccidentAlerts, 60 * 1000); // Fetch alerts every minute
 });
 
 client.login(token);
 
-const downloadDirectory = './downloaded_images'; // Specify the directory for downloaded images
+const downloadDirectory = './downloaded_images';
 
 async function sendAccidentAlerts() {
   try {
-    const response = await axios.get("https://www.waze.com/rtserver/web/TGeoRSS?bottom=41.480736238455194&left=-94.51194763183595&ma=799&mj=200&mu=200&right=-92.92991638183595&top=41.7222676196229&types=alerts,traffic");
+    const response = await axios.get(wazeApiUrl);
 
-    // Extract the police reports from the JSON response
-    const reports = response.data.alerts.filter((alert) => alert.type === "POLICE"); //Define Waze Alert type and Subtypes here e.g. POLICE, ACCIDENT, JAM
+    // Extract the accident and jam reports from the JSON response
+    const accidentReports = response.data.alerts.filter((alert) => alert.type === "ACCIDENT" || alert.type === "JAM");
 
     const channel = client.channels.cache.get(channelId);
     const role = channel.guild.roles.cache.get(roleId);
+    
     if (!channel) {
       console.log(`Invalid channel ID: ${channelId}`);
       return;
     }
+    
+    // Fetch the previously active alerts from the database
+    const [activeAlertsFromDB] = await pool.query(
+      "SELECT id, uuid FROM alerts WHERE status = 'active'"
+    );
 
-    const newReports = getNewReports(reports);
+    const activeAlerts = accidentReports.filter((report) => {
+      const distance = getDistance(targetLat, targetLon, report.location.y, report.location.x);
+      return distance <= maxDistance;
+    });
+
+    const activeAlertsCount = activeAlerts.length; // Calculate the active accident reports count
+
+    // Update the status of alerts that are no longer active
+    for (const alertFromDB of activeAlertsFromDB) {
+      const isAlertStillActive = activeAlerts.some(
+        (report) => report.uuid === alertFromDB.uuid
+      );
+
+      if (!isAlertStillActive) {
+        await pool.query(
+          "UPDATE alerts SET status = 'inactive' WHERE id = ?",
+          [alertFromDB.id]
+        );
+      }
+    }
+
+    insertActiveAlertsCount(activeAlertsCount);
+
+
+    const newReports = getNewReports(accidentReports);
     if (newReports.length === 0) {
       return; // No new accident reports found, no need to send a notification
     }
 
     for (const report of newReports) {
-        if (isNewAlert(report)) {
-          const distance = getDistance(targetLat, targetLon, report.location.y, report.location.x);
-          if (distance <= maxDistance) {
-            const nearestCamera = findNearestCamera(report.location.y, report.location.x, maxCameraDistance);
-            const address = await reverseGeocode(report.location.y, report.location.x);
-      
-            const embed = new EmbedBuilder()
-              .setTitle("Traffic Alert")
-              .setColor("#ff0000")
-              .addFields(
-                { name: "Type", value: report.type },
-                { name: "Reported Location", value: `${address.street || "Unknown"}, ${address.city || "Unknown"}` },
-                { name: "Alert Subtype", value: report.subtype || "Unknown" }
-              );
-      
+      if (isNewAlert(report)) {
+      const distance = getDistance(targetLat, targetLon, report.location.y, report.location.x);
+      if (distance <= maxDistance) {
+        const nearestCamera = findNearestCamera(report.location.y, report.location.x, maxCameraDistance);
+        const address = await reverseGeocode(report.location.y, report.location.x);
 
-              if (nearestCamera) {
-                const randomString = generateRandomString(10);
-                const imageUrl = `${nearestCamera.imageUrl}?r=${randomString}`;
-        
-                // Download the image and attach it
-                const imageBuffer = await downloadImage(imageUrl);
-                const imageFileName = `${randomString}.jpg`; // Use the random string as the filename
-                const attachment = new AttachmentBuilder(imageBuffer, { name: imageFileName });
-        
-                embed.addFields({ name: "Nearest Camera", value: nearestCamera.name })
-                  .addFields({ name: "Camera Location", value: `${nearestCamera.location.lat}, ${nearestCamera.location.lon}` })
-                  .setImage(`attachment://${imageFileName}`); // Set the image in the embed as the downloaded image
-        
-                // Send the embed with the attached image
-                channel.send({ content: `Attention <@&${roleId}>! There is a new traffic alert near ${address.city || 'Unknown'}.`, embeds: [embed], files: [attachment] });
-              } else {
-                embed.addFields({ name: "No Nearby Cameras", value: "No nearby cameras found." });
-        
-                // Send the embed
-                channel.send({ content: `Attention <@&${roleId}>! There is a new traffic alert near ${address.city || 'Unknown'}.`, embeds: [embed] });
-              }
+        const embed = new EmbedBuilder()
+          .setTitle("Traffic Alert")
+          .setColor("#ff0000")
+          .addFields(
+            { name: "Type", value: report.type },
+            { name: "Alert Subtype", value: report.subtype || "Unknown" },
+            { name: "Reported Location", value: `${report.street || address.street || "Unknown"}, ${report.city || report.nearBy || address.city || "Unknown"}` },
+            { name: "Description", value: `${report.reportDescription || 'No Descrip'}`}
+          );
+
+        if (nearestCamera) {
+          try {
+            const randomString = generateRandomString(10);
+            const imageUrl = `${nearestCamera.imageUrl}?r=${randomString}`;
+
+            const imageBuffer = await downloadImage(imageUrl);
+            const imageFileName = `${randomString}.jpg`;
+            const attachment = new AttachmentBuilder(imageBuffer, { name: imageFileName });
+
+            embed.addFields({ name: "Nearest Camera", value: nearestCamera.name })
+              .addFields({ name: "Camera Location", value: `${nearestCamera.location.lat}, ${nearestCamera.location.lon}` })
+              .setImage(`attachment://${imageFileName}`)
+              .setTimestamp();
+
+            channel.send({ content: `Attention! Traffic incident Reported near ${report.street || address.street || 'Unknown'}, ${report.city || address.city || 'Unknown'}.`, embeds: [embed], files: [attachment] });
+            
+            const currentTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+            const connection = await pool.getConnection();
+            try {
+              await connection.query(
+                "INSERT INTO alerts (type, subtype, location, uuid, location_lat, location_lon, description, camera_name, camera_lat, camera_lon, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                [
+                  report.type,
+                  report.subtype || null,
+                  `${report.street || address.street || "Unknown"}, ${report.city || report.nearBy || address.city || "Unknown"}`,
+                  report.uuid,
+                  report.location.y,
+                  report.location.x,
+                  report.reportDescription || null,
+                  nearestCamera.name || null,
+                  nearestCamera.location.lat || null,
+                  nearestCamera.location.lon || null,
+                  currentTimestamp,
+                ]
+              );
+              await connection.commit();
+            } catch (dbError) {
+              console.error("Error inserting alert into the database:", dbError);
+            } finally {
+              connection.release();
             }
+          } catch (error) {
+            console.error("Error handling the alert:", error);
           }
-        }
-        
-    previousReports = reports; // Update the previous reports
+        } 
+      }
+    }
+  }
+    console.log(`Total Active Alerts within ${maxDistance} miles: ${activeAlertsCount}`);  
+
+    previousReports = accidentReports;
   } catch (error) {
     console.error("Error retrieving Accident reports:", error);
+  }
+}
+
+// Function to insert active alerts count into the 'active_alerts_count' table
+async function insertActiveAlertsCount(activeAlertsCount) {
+  const currentTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+  const connection = await pool.getConnection();
+  try {
+    await connection.query(
+      "INSERT INTO active_alerts_count (time, active_alerts_count) VALUES (?, ?)",
+      [currentTimestamp, activeAlertsCount]
+    );
+    await connection.commit();
+  } catch (dbError) {
+    console.error("Error inserting active alerts count into the 'active_alerts_count' table:", dbError);
+  } finally {
+    connection.release();
   }
 }
 
