@@ -1,8 +1,8 @@
 {
-  "name": "policebot",
+  "name": "accidentbot",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "AccidentBot",
+  "main": "AccidentBot-Test-2.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +14,10 @@
     "discord.js": "^14.11.0",
     "fs-js": "^1.0.6",
     "geolib": "^3.3.4",
+    "mysql2": "^3.6.1",
     "pm2": "^5.3.0",
-    "timers-promises": "^1.0.1"
+    "timers-promises": "^1.0.1",
+    "dotenv": "^16.3.1"
   }
 }
+
