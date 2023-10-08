@@ -1,5 +1,5 @@
 # Accident-Alert-Bot
-A bot that uses the Waze website to send accident alerts to discord
+A bot that uses the Waze website to send accident alerts to discord and now *SQL* :-)
 
 # Basic Setup and dependancies
 Testing on Ubuntu 22.04
